@@ -13,26 +13,66 @@
 </head>
 
 <body>
+
+
     <div class="container">
-        <div>
+        <div id="set">
             <div>
-                <h1>Age Calculator</h1>
-            </div>
-            <div>
-                <p>Select Your Date Of Birth :</p>
+                <div>
+                    <h1>Age Calculator</h1>
+                </div>
+                <div id="onlyser">
+                    <p>Select Your Date Of Birth :</p>
                 <p><input type="date" id="DOB"></p>
-                <p><input type="button" value="Check now" onclick="ageCalc()"></p>
+                </div>
+                <table id="table">
+                    <tr>
+                        <td>
+                            <p>Want to check age difference between you and your partner ? </p>
+                        </td>
+                        <td>
+                            <input type="checkbox" for="partner" id="partner" onclick="showpartner(this)">
+                        </td>
+                    </tr>
+                </table>
+                <p id="onlyuser">
+                    <input  type="button" value="Check Now" onclick="ageCalc()">
+                </p>
+
+                <div id="partques" style="display: none">
+                    <div id="partues">
+                        <p>Select Your Partner Date Of Birth :</p>
+                        <p><input type="date" id="DOB1"></p>
+                    </div>
+                    <p><input id="couple" type="button" value="Check Now" onclick="partCalc()"></p>
+                </div>
                 <p id="result"></p>
             </div>
         </div>
     </div>
     <script>
+        // toggle
+        function showpartner(partner) {
+            var partner = document.getElementById("partner");
+            partques.style.display = partner.checked ? "block" : "none";
+            partues.style.backgroundColor = "pink";
+            table.style.backgroundColor = partner.checked ? "orange" : "";
+            set.style.backgroundColor = partner.checked ? "" : "";
+            onlyuser.style.display = partner.checked ? "none" : "block";
+            onlyser.style.backgroundColor = partner.checked ? "skyblue" : "";
+            document.getElementById("result").innerHTML = ("");
+            result.style.backgroundColor = "";
+        }
+        // user age
         function ageCalc() {
             var userinput = document.getElementById("DOB").value;
             var dob = new Date(userinput);
 
             if (userinput == null || userinput == "") {
                 alert("Choose Date of Birth To Find your preciese Age!");
+                return document.getElementById("result").innerHTML = ("");
+
+
             } else {
                 // extracting
                 var userYear = dob.getYear();
@@ -50,37 +90,104 @@
                 // and finding the proper age of the user
                 if (userMonth == currentMonth && userDate == currentDate) {
                     if (yearAge > 0) {
-                        return document.getElementById("result").innerHTML =("Many more Happy Returns of the Day. it's been " + yearAge + " years till today.");
+                        return document.getElementById("result").innerHTML = ("Many more Happy Returns of the Day. it's been " + yearAge + " years till today.");
                     } else {
-                        return document.getElementById("result").innerHTML =("Welcome to World.! Today is your First Day.");
+                        return document.getElementById("result").innerHTML = ("Welcome to World.! Today is your First Day.");
                     }
-                }else if(dob < now){
+                } else if (dob < now) {
                     // getting months
-                    if(currentMonth >= userMonth){
-                        var monthAge = ( currentMonth - userMonth);
-                    }else{
+                    if (currentMonth >= userMonth) {
+                        var monthAge = (currentMonth - userMonth);
+                    } else {
                         yearAge--;
-                        var monthAge = 12+ currentDate -userMonth;
+                        var monthAge = 12 + currentDate - userMonth;
                     }
                     // getting days
-                    if(currentDate >= userDate){
+                    if (currentDate >= userDate) {
                         var dateAge = (currentDate - userDate);
-                    }else{
+                    } else {
                         monthAge--;
-                        var dateAge = (31+ currentDate - userDate);
-                        if(monthAge<0){
+                        var dateAge = (31 + currentDate - userDate);
+                        if (monthAge < 0) {
                             monthAge = 11;
                             yearAge--;
                         }
                     }
-                    return document.getElementById("result").innerHTML =("it's been almost "+yearAge+"years, "+monthAge+" months and "+dateAge+ " days. While you're here, make it worth while. you are precious.");
-                }else if(dob > now){
-                    return document.getElementById("result").innerHTML =("Enter proper Date of Birth.");
+                    result.style.backgroundColor = "rgba(0, 0, 0, 0.246)";
+                    return document.getElementById("result").innerHTML = ("it's been almost " + yearAge + "years, " + monthAge + " months and " + dateAge + " days. While you're here, make it worth while. you are precious.");
+                } else if (dob > now) {
+                    result.style.backgroundColor = "rgba(0, 0, 0, 0.246)";
+                    return document.getElementById("result").innerHTML = ("Enter proper Date of Birth.");
                 }
+
+            }
+            
+        }
+        // age difference
+        function partCalc() {
+            var userinput = document.getElementById("DOB").value;
+            var dob = new Date(userinput);
+            var userinput1 = document.getElementById("DOB1").value;
+            var dob1 = new Date(userinput1);
+            
+
+            if (userinput == null || userinput1 == "") {
+                alert("Select Date of Births to find difference.");
+                return document.getElementById("result").innerHTML = ("");
+            }else{
+                // extracting
+                var userYear = dob.getYear();
+                var userMonth = dob.getMonth();
+                var userDate = dob.getDate();
+                var userYear1 = dob1.getYear();
+                var userMonth1 = dob1.getMonth();
+                var userDate1 = dob1.getDate();
+                // getting current values
+                var now = new Date();
+                var currentYear = now.getYear();
+                var currentMonth = now.getMonth();
+                var currentDate = now.getDate();
+                // setting variables to collect values
+                if(userYear == userYear1 && userMonth == userMonth1 && userDate == userDate1){
+                    return document.getElementById("result").innerHTML = ("No Difference in Age.");
+                }else if (dob.getDate() > now.getDate() || dob1.getDate() > now.getDate()) {
+                    return document.getElementById("result").innerHTML = ("Enter proper Date of Birth.");
+                }else{
+                    // getting Years
+                    u1yearAge = (currentYear - userYear);
+                    u2yearAge = (currentYear - userYear1);
+                    if(u1yearAge > u2yearAge){
+                        var pYearAge = u1yearAge - u2yearAge;
+                        if(pYearAge == 0){
+                            pYearAge++;
+                        }
+                    }else{
+                        var pYearAge = u2yearAge - u1yearAge;
+                    }
+                    // getting months
+                    if (userMonth >= userMonth1) {
+                        var pMonthAge = (userMonth - userMonth1);
+                    } else {
+
+                        var pMonthAge = userMonth1 - userMonth;
+                    }
+                    // getting days
+                    if (userDate >= userDate1) {
+                        var pDateAge = (userDate - userDate1);
+                    } else {
+                        var pDateAge = (userDate1 - userDate);
+                    }
+                    result.style.backgroundColor = "rgba(0, 0, 0, 0.246)";
+                    return document.getElementById("result").innerHTML = ("Difference is " + pYearAge + "years, " + pMonthAge + " months and " + pDateAge + " days. Cheers for finding your precious one <3.");
+                }
+                
 
             }
         }
     </script>
+    <footer class="footer">
+        <p>author: Vemuri Sai Srinivas </p>
+</footer>
 </body>
 
 </html>
