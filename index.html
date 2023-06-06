@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Age Calculator</title>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <div>
+                <h1>Age Calculator</h1>
+            </div>
+            <div>
+                <p>Select Your Date Of Birth :</p>
+                <p><input type="date" id="DOB"></p>
+                <p><input type="button" value="Check now" onclick="ageCalc()"></p>
+                <p id="result"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function ageCalc() {
+            var userinput = document.getElementById("DOB").value;
+            var dob = new Date(userinput);
+
+            if (userinput == null || userinput == "") {
+                alert("Choose Date of Birth To Find your preciese Age!");
+            } else {
+                // extracting
+                var userYear = dob.getYear();
+                var userMonth = dob.getMonth();
+                var userDate = dob.getDate();
+                // getting current values
+                var now = new Date();
+
+                var currentYear = now.getYear();
+                var currentMonth = now.getMonth();
+                var currentDate = now.getDate();
+                // setting variables to collect values
+                yearAge = (currentYear - userYear)
+                // if it is your birthday or first day in the world
+                // and finding the proper age of the user
+                if (userMonth == currentMonth && userDate == currentDate) {
+                    if (yearAge > 0) {
+                        return document.getElementById("result").innerHTML =("Many more Happy Returns of the Day. it's been " + yearAge + " years till today.");
+                    } else {
+                        return document.getElementById("result").innerHTML =("Welcome to World.! Today is your First Day.");
+                    }
+                }else if(dob < now){
+                    // getting months
+                    if(currentMonth >= userMonth){
+                        var monthAge = ( currentMonth - userMonth);
+                    }else{
+                        yearAge--;
+                        var monthAge = 12+ currentDate -userMonth;
+                    }
+                    // getting days
+                    if(currentDate >= userDate){
+                        var dateAge = (currentDate - userDate);
+                    }else{
+                        monthAge--;
+                        var dateAge = (31+ currentDate - userDate);
+                        if(monthAge<0){
+                            monthAge = 11;
+                            yearAge--;
+                        }
+                    }
+                    return document.getElementById("result").innerHTML =("it's been almost "+yearAge+"years, "+monthAge+" months and "+dateAge+ " days. While you're here, make it worth while. you are precious.");
+                }else if(dob > now){
+                    return document.getElementById("result").innerHTML =("Enter proper Date of Birth.");
+                }
+
+            }
+        }
+    </script>
+</body>
+
+</html>
