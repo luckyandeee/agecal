@@ -150,8 +150,8 @@
                 // setting variables to collect values
                 if(userYear == userYear1 && userMonth == userMonth1 && userDate == userDate1){
                     return document.getElementById("result").innerHTML = ("No Difference in Age.");
-                }else if (dob.getDate() > now.getDate() || dob1.getDate() > now.getDate()) {
-                    return document.getElementById("result").innerHTML = ("Enter proper Date of Birth.");
+                }else if (dob.getYear() > now.getYear() || dob1.getYear() > now.getYear()) {
+                     return document.getElementById("result").innerHTML = ("Enter proper Date of Birth.");
                 }else{
                     // getting Years
                     u1yearAge = (currentYear - userYear);
