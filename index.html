@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Age Calculator</title>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div id="set">
+            <div>
+                <div>
+                    <h1>Age Calculator</h1>
+                </div>
+                <div id="onlyser">
+                    <p>Select Your Date Of Birth :</p>
+                <p><input type="datetime-local" id="DOB"></p>
+                </div>
+                <table id="table">
+                    <tr>
+                        <td>
+                            <p>Want to check age difference between you and your partner ? </p>
+                        </td>
+                        <td>
+                            <input type="checkbox" for="partner" id="partner" onclick="showpartner(this)">
+                        </td>
+                    </tr>
+                </table>
+                <p id="onlyuser">
+                    <input  type="button" value="Check Now" onclick="ageCalc()">
+                </p>
+
+                <div id="partques" style="display: none">
+                    <div id="partues">
+                        <p>Select Your Partner Date Of Birth :</p>
+                        <p><input type="datetime-local" id="DOB1"></p>
+                    </div>
+                    <p><input id="couple" type="button" value="Check Now" onclick="partCalc()"></p>
+                </div>
+                <p id="result"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // toggle
+        function showpartner(partner) {
+            var partner = document.getElementById("partner");
+            partques.style.display = partner.checked ? "block" : "none";
+            partues.style.backgroundColor = "pink";
+            table.style.backgroundColor = partner.checked ? "orange" : "";
+            set.style.backgroundColor = partner.checked ? "" : "";
+            onlyuser.style.display = partner.checked ? "none" : "block";
+            onlyser.style.backgroundColor = partner.checked ? "skyblue" : "";
+            document.getElementById("result").innerHTML = ("");
+            result.style.backgroundColor = "";
+        }
+        // user age
+        function ageCalc() {
+            var userinput = document.getElementById("DOB").value;
+            var dob = new Date(userinput);
+
+            if (userinput == null || userinput == "") {
+                alert("Choose Date of Birth To Find your preciese Age!");
+                return document.getElementById("result").innerHTML = ("");
+
+
+            } else {
+                // extracting
+                var userYear = dob.getYear();
+                var userMonth = dob.getMonth();
+                var userDate = dob.getDate();
+                var userHour = dob.getHours();
+                var userMinutes = dob.getMinutes();
+                // getting current values
+                var now = new Date();
+
+                var currentYear = now.getYear();
+                var currentMonth = now.getMonth();
+                var currentDate = now.getDate();
+                var currentHour = now.getHours();
+                var currentMinute = now.getMinutes();
+                var currentSecond = now.getSeconds();
+                // setting variables to collect values
+                yearAge = (currentYear - userYear)
+                var hourAge = (currentHour - userHour); 
+                if(userMinutes == currentMinute){
+                    var minAge = 0; 
+                }else{
+                    var minAge = (currentMinute - userMinutes); 
+                }
+                
+                // if it is your birthday or first day in the world
+                // and finding the proper age of the user
+                if (userMonth == currentMonth && userDate == currentDate ) {
+                    if (yearAge > 0) {
+                        return document.getElementById("result").innerHTML = ("Many more Happy Returns of the Day. it's been " + yearAge + " years, "+hourAge+" hours and "+minAge+" minutes till today.");
+                    } else {
+                        return document.getElementById("result").innerHTML = ("Welcome to World.! Today is your First Day and it happened "+hourAge+" hours and "+minAge+" minutes");
+                    }
+                } else if (dob < now) {
+                    // getting months
+                    if (currentMonth >= userMonth) {
+                        var monthAge = (currentMonth - userMonth);
+                    } else {
+                        yearAge--;
+                        var monthAge = 12 + currentDate - userMonth;
+                    }
+                    // getting days
+                    if (currentDate >= userDate) {
+                        var dateAge = (currentDate - userDate);
+                    } else {
+                        monthAge--;
+                        var dateAge = (31 + currentDate - userDate);
+                        if (monthAge < 0) {
+                            monthAge = 11;
+                            yearAge--;
+                        }
+                    }
+                    result.style.backgroundColor = "rgba(0, 0, 0, 0.246)";
+                    return document.getElementById("result").innerHTML = ("it's been almost " + yearAge + "years, " + monthAge + " months and " + dateAge + " days, "+hourAge+" hours and "+minAge+" minutes. While you're here, make it worth while. you are precious.");
+                } else if (dob > now) {
+                    result.style.backgroundColor = "rgba(0, 0, 0, 0.246)";
+                    return document.getElementById("result").innerHTML = ("Enter proper Date of Birth.");
+                }
+
+            }
+            
+        }
+        // age difference
+        function partCalc() {
+            var userinput = document.getElementById("DOB").value;
+            var dob = new Date(userinput);
+            var userinput1 = document.getElementById("DOB1").value;
+            var dob1 = new Date(userinput1);
+            
+
+            if (userinput == null || userinput1 == "") {
+                alert("Select Date of Births to find difference.");
+                return document.getElementById("result").innerHTML = ("");
+            }else{
+                // extracting
+                var userYear = dob.getYear();
+                var userMonth = dob.getMonth();
+                var userDate = dob.getDate();
+                var userHour = dob.getHours();
+                var userMinutes = dob.getMinutes();
+                var userYear1 = dob1.getYear();
+                var userMonth1 = dob1.getMonth();
+                var userDate1 = dob1.getDate();
+                var userHour1 = dob1.getHours();
+                var userMinutes1 = dob1.getMinutes();
+                var hourAge = (23 - userHour); 
+                var minAge = (60 - userMinutes); 
+                var hourAge1 = (23 - userHour1); 
+                var minAge1 = (60 - userMinutes1); 
+                // getting current values
+                var now = new Date();
+                var currentYear = now.getYear();
+                var currentMonth = now.getMonth();
+                var currentDate = now.getDate();
+                var currentHour = now.getHours();
+                var currentMinute = now.getMinutes();
+                var currentSecond = now.getSeconds();
+                // setting variables to collect values
+                if(userYear == userYear1 && userMonth == userMonth1 && userDate == userDate1){
+                    return document.getElementById("result").innerHTML = ("No Difference in Age.");
+                }else if (dob > now || dob1 > now) {
+                    return document.getElementById("result").innerHTML = ("Enter proper Date of Birth.");
+                }else{
+                    // getting Years
+                    u1yearAge = (currentYear - userYear);
+                    u2yearAge = (currentYear - userYear1);
+                    if(u1yearAge > u2yearAge){
+                        var pYearAge = u1yearAge - u2yearAge;
+                        if(pYearAge == 0){
+                            pYearAge++;
+                        }
+                    }else{
+                        var pYearAge = u2yearAge - u1yearAge;
+                    }
+                    // getting months
+                    if (userMonth >= userMonth1) {
+                        var pMonthAge = (userMonth - userMonth1);
+                    } else {
+
+                        var pMonthAge = userMonth1 - userMonth;
+                    }
+                    // getting days
+                    if (userDate >= userDate1) {
+                        var pDateAge = (userDate - userDate1);
+                    } else {
+                        var pDateAge = (userDate1 - userDate);
+                    }
+                    //getting hours
+                    if (hourAge >= hourAge1) {
+                        var pHourAge = (hourAge - hourAge1);
+                    } else {
+                        var pHourAge = (hourAge1 - hourAge);
+                    }
+                    //getting minutes
+                      //getting hours
+                      if (minAge >= minAge1) {
+                        var pMinAge = (minAge - minAge1);
+                    } else {
+                        var pMinAge = (minAge1 - minAge);
+                    }
+                    result.style.backgroundColor = "rgba(0, 0, 0, 0.246)";
+                    return document.getElementById("result").innerHTML = ("Difference is " + pYearAge + "years, " + pMonthAge + " months and " + pDateAge + " days, "+pHourAge+" hours and "+pMinAge+" minutes. Cheers for finding your precious one <3.");
+                }
+                
+
+            }
+        }
+    </script>
+    <footer class="footer">
+        <p>author: Vemuri Sai Srinivas </p>
+</footer>
+</body>
+
+</html>
